@@ -157,7 +157,7 @@ def users_show(user_id):
                 .limit(100)
                 .all())
     likes = [message.id for message in user.likes]            
-    return render_template('users/show.html', user=user, messages=messages)
+    return render_template('users/show.html', user=user, messages=messages, likes=likes)
 
 
 @app.route('/users/<int:user_id>/following')
@@ -250,6 +250,7 @@ def add_like(message_id):
 @app.route('/users/profile', methods=["GET", "POST"])
 def edit_profile():
     """Update profile for current user."""
+    
     if not g.user:
         flash("Access unauthorized.", "danger")
         return redirect("/")
@@ -336,6 +337,7 @@ def messages_destroy(message_id):
     if msg.user_id != g.user.id:
         flash("Access unauthorized.", "danger")
         return redirect("/")
+    
     db.session.delete(msg)
     db.session.commit()
 
@@ -360,6 +362,7 @@ def homepage():
 
         messages = (Message
                     .query
+                    .filter(Message.user_id.in_(following_ids))
                     .order_by(Message.timestamp.desc())
                     .limit(100)
                     .all())
