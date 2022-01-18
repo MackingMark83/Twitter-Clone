@@ -39,8 +39,8 @@ class MessageViewTestCase(TestCase):
     def setUp(self):
         """Create test client, add sample data."""
 
-        db.drop_all()
-        db.create_all()
+        User.query.delete()
+        Message.query.delete()
 
         self.client = app.test_client()
 
@@ -49,9 +49,7 @@ class MessageViewTestCase(TestCase):
                                     password="testuser",
                                     image_url=None)
 
-        self.testuser_id = 8989
-        self.testuser.id = self.testuser_id
-        
+       
         
         db.session.commit()
 

@@ -41,7 +41,7 @@ class UserModelTestCase(TestCase):
         """Does basic model work?"""
         
         m = Message(
-            text="a warble",
+            text="I did it",
             user_id=self.uid
         )
 
@@ -50,7 +50,7 @@ class UserModelTestCase(TestCase):
 
         # User should have 1 message
         self.assertEqual(len(self.u.messages), 1)
-        self.assertEqual(self.u.messages[0].text, "a warble")
+        self.assertEqual(self.u.messages[0].text, "I did it")
 
     def test_message_likes(self):
         m1 = Message(
@@ -63,7 +63,7 @@ class UserModelTestCase(TestCase):
             user_id=self.uid 
         )
 
-        u = User.signup("yetanothertest", "t@email.com", "password", None)
+        u = User.signup("Zack94", "princessclemmons@yahoo.com", "Mildredk29", None)
         uid = 888
         u.id = uid
         db.session.add_all([m1, m2, u])
